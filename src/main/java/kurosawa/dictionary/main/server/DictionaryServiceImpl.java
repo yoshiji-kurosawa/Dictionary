@@ -15,11 +15,27 @@
 package kurosawa.dictionary.main.server;
 
 import kurosawa.dictionary.main.client.DictionaryService;
+import kurosawa.dictionary.main.client.Response;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public class DictionaryServiceImpl extends RemoteServiceServlet implements DictionaryService {
 
-	public String send(String send) {
-		return send + "を受信しました。";
+	private static final long serialVersionUID = 1L;
+
+	public Response search(String english) {
+		Response response = new Response("search","検索成功",english,"日本語");
+		return response;
 	}
+
+	public Response add(String english, String japanese) {
+		Response response = new Response("add","登録成功",english,japanese);
+		return response;
+	}
+
+	public Response delete(String english) {
+		Response response = new Response("delete","削除成功",english,"日本語");
+		return response;
+	}
+
 }

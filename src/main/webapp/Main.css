@@ -294,3 +294,6 @@ a:visited {
 	background-color: #e8eef7;
 	cursor: hand;
 }
+.rootPanel {
+	background-color: palegreen;
+}
