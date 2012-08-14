@@ -5,20 +5,30 @@
 
 <web-app>
 
-  <!-- Servlets -->
-  <servlet>
-    <servlet-name>greetServlet</servlet-name>
-    <servlet-class>kurosawa.dictionary.server.GreetingServiceImpl</servlet-class>
-  </servlet>
+	<!-- Servlets -->
+	<servlet>
+		<servlet-name>greetServlet</servlet-name>
+		<servlet-class>kurosawa.dictionary.server.GreetingServiceImpl</servlet-class>
+	</servlet>
 
-  <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/dummy/greet</url-pattern>
-  </servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>greetServlet</servlet-name>
+		<url-pattern>/dummy/greet</url-pattern>
+	</servlet-mapping>
 
-  <!-- Default page to serve -->
-  <welcome-file-list>
-    <welcome-file>dummy.html</welcome-file>
-  </welcome-file-list>
+	<servlet>
+		<servlet-name>DictionaryService</servlet-name>
+		<servlet-class>kurosawa.dictionary.main.server.DictionaryServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DictionaryService</servlet-name>
+		<url-pattern>/main/DictionaryService</url-pattern>
+	</servlet-mapping>
+
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>Main.html</welcome-file>
+	</welcome-file-list>
 
 </web-app>

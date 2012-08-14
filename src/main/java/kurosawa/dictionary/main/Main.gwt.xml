@@ -1,0 +1,5 @@
+<module rename-to='main'>
+	<inherits name="com.google.gwt.user.User"/>
+	<inherits name="com.google.gwt.user.theme.standard.Standard"/>
+	<entry-point class="kurosawa.dictionary.main.client.Main"/>
+</module>
