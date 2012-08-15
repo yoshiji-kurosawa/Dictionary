@@ -14,6 +14,12 @@
  *******************************************************************************/
 package kurosawa.dictionary.main.server;
 
+import java.util.logging.Logger;
+
+import javax.servlet.ServletException;
+
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import kurosawa.dictionary.main.client.DictionaryService;
 import kurosawa.dictionary.main.client.Response;
 
@@ -22,6 +28,28 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class DictionaryServiceImpl extends RemoteServiceServlet implements DictionaryService {
 
 	private static final long serialVersionUID = 1L;
+
+	private static Logger logger = Logger.getLogger(DictionaryServiceImpl.class.getName());
+	
+	public void init() throws ServletException
+	{
+	    try {
+	        logger.info("init WebApplicationContextUtils start");
+	        // applicationContext.xmlに定義されているBean群とこのサーブレットを
+	        // アノテーションに従って Autowireする
+	        WebApplicationContextUtils
+	            .getRequiredWebApplicationContext(getServletContext())
+	                .getAutowireCapableBeanFactory().autowireBean(this);
+	        logger.info("init WebApplicationContextUtils end");
+	    }
+	    catch (IllegalStateException ex) {
+	        // この例外が起こる場合web.xmlに設定が足りない
+	        throw new ServletException(
+	            "Couldn't get Spring's WebApplicationContext. " +
+	            "Please check whether ContextLoaderListener exists " +
+	            "in your web.xml.");
+	    }
+	}
 
 	public Response search(String english) {
 		Response response = new Response("search","検索成功",english,"日本語");
