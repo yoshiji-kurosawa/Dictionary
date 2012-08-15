@@ -114,13 +114,13 @@ public class Main implements EntryPoint {
 				txbJapanese.setText("");
 				lblMessage.setText("");
 				dictionaryService.search(txbEnglish.getText(),
-						new AsyncCallback<Response>() {
+						new AsyncCallback<DictionaryServiceResponse>() {
 
 							public void onFailure(Throwable caught) {
-								Window.alert("検索失敗");								
+								Window.alert("検索失敗:" + caught.getMessage());								
 							}
 
-							public void onSuccess(Response response) {
+							public void onSuccess(DictionaryServiceResponse response) {
 								txbJapanese.setText(response.getJapanese());
 								lblMessage.setText(response.getMessage());
 							}
@@ -134,13 +134,13 @@ public class Main implements EntryPoint {
 			public void onClick(ClickEvent event) {
 				lblMessage.setText("");
 				dictionaryService.add(txbEnglish.getText(), txbJapanese.getText(),
-						new AsyncCallback<Response>() {
+						new AsyncCallback<DictionaryServiceResponse>() {
 
 							public void onFailure(Throwable caught) {
-								Window.alert("登録失敗");								
+								Window.alert("登録失敗:" + caught.getMessage());								
 							}
 
-							public void onSuccess(Response response) {
+							public void onSuccess(DictionaryServiceResponse response) {
 								lblMessage.setText(response.getMessage());
 							}
 							
@@ -154,13 +154,13 @@ public class Main implements EntryPoint {
 				txbJapanese.setText("");
 				lblMessage.setText("");
 				dictionaryService.delete(txbEnglish.getText(),
-						new AsyncCallback<Response>() {
+						new AsyncCallback<DictionaryServiceResponse>() {
 
 							public void onFailure(Throwable caught) {
-								Window.alert("削除失敗");								
+								Window.alert("削除失敗:" + caught.getMessage());								
 							}
 
-							public void onSuccess(Response response) {
+							public void onSuccess(DictionaryServiceResponse response) {
 								txbJapanese.setText(response.getJapanese());
 								lblMessage.setText(response.getMessage());
 							}

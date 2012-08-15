@@ -14,14 +14,15 @@
  *******************************************************************************/
 package kurosawa.dictionary.main.server;
 
-import java.util.logging.Logger;
-
 import javax.servlet.ServletException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import kurosawa.dictionary.main.client.DictionaryService;
-import kurosawa.dictionary.main.client.Response;
+import kurosawa.dictionary.main.client.DictionaryServiceResponse;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -29,18 +30,25 @@ public class DictionaryServiceImpl extends RemoteServiceServlet implements Dicti
 
 	private static final long serialVersionUID = 1L;
 
-	private static Logger logger = Logger.getLogger(DictionaryServiceImpl.class.getName());
-	
+	private Log log = LogFactory.getLog(DictionaryServiceImpl.class);
+
+	DictionaryModel dictionaryModel;
+	@Autowired
+	public void setDictionaryModel(DictionaryModel dictionaryModel) {
+		log.info("dictionaryModel:" + dictionaryModel);
+		this.dictionaryModel = dictionaryModel;
+	}
+
 	public void init() throws ServletException
 	{
 	    try {
-	        logger.info("init WebApplicationContextUtils start");
+	        log.info("WebApplicationContextUtils");
 	        // applicationContext.xmlに定義されているBean群とこのサーブレットを
 	        // アノテーションに従って Autowireする
 	        WebApplicationContextUtils
 	            .getRequiredWebApplicationContext(getServletContext())
 	                .getAutowireCapableBeanFactory().autowireBean(this);
-	        logger.info("init WebApplicationContextUtils end");
+	        log.info("init WebApplicationContextUtils end");
 	    }
 	    catch (IllegalStateException ex) {
 	        // この例外が起こる場合web.xmlに設定が足りない
@@ -51,19 +59,37 @@ public class DictionaryServiceImpl extends RemoteServiceServlet implements Dicti
 	    }
 	}
 
-	public Response search(String english) {
-		Response response = new Response("search","検索成功",english,"日本語");
-		return response;
+	public DictionaryServiceResponse search(String english) {
+		DictionaryServiceResponse dsr;
+		try {
+			DictionaryModelResponse dmr = dictionaryModel.search(english);
+			dsr = new DictionaryServiceResponse(dmr.getFunction(), dmr.getMessage(), dmr.getEnglish(), dmr.getJapanese());
+		} catch (Exception ex) {
+			dsr = new DictionaryServiceResponse("add", "検索失敗:" + ex.getMessage(), english, "");
+		}
+		return dsr;
 	}
 
-	public Response add(String english, String japanese) {
-		Response response = new Response("add","登録成功",english,japanese);
-		return response;
+	public DictionaryServiceResponse add(String english, String japanese) {
+		DictionaryServiceResponse dsr;
+		try {
+			DictionaryModelResponse dmr = dictionaryModel.add(english, japanese);
+			dsr = new DictionaryServiceResponse(dmr.getFunction(), dmr.getMessage(), dmr.getEnglish(), dmr.getJapanese());
+		} catch (Exception ex) {
+			dsr = new DictionaryServiceResponse("add", "登録失敗:" + ex.getMessage(), english, japanese);
+		}
+		return dsr;
 	}
 
-	public Response delete(String english) {
-		Response response = new Response("delete","削除成功",english,"日本語");
-		return response;
+	public DictionaryServiceResponse delete(String english) {
+		DictionaryServiceResponse dsr;
+		try {
+			DictionaryModelResponse dmr = dictionaryModel.delete(english);
+			dsr = new DictionaryServiceResponse(dmr.getFunction(), dmr.getMessage(), dmr.getEnglish(), dmr.getJapanese());
+		} catch (Exception ex) {
+			dsr = new DictionaryServiceResponse("add", "削除失敗:" + ex.getMessage(), english, "");
+		}
+		return dsr;
 	}
 
 }

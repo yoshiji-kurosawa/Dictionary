@@ -2,7 +2,7 @@ package kurosawa.dictionary.main.client;
 
 import java.io.Serializable;
 
-public class Response implements Serializable {
+public class DictionaryServiceResponse implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -11,10 +11,10 @@ public class Response implements Serializable {
 	private String english;
 	private String japanese;
 	
-	public Response(){
+	public DictionaryServiceResponse(){
 	}
 	
-	public Response(String function, String message, String english, String japanese){
+	public DictionaryServiceResponse(String function, String message, String english, String japanese){
 		this.function = function;
 		this.message = message;
 		this.english = english;

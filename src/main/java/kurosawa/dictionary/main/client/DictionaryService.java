@@ -33,8 +33,8 @@ public interface DictionaryService extends RemoteService {
 		}
 	}
 	
-	Response search(String english);
-	Response add(String english, String japanese);
-	Response delete(String english);
+	DictionaryServiceResponse search(String english);
+	DictionaryServiceResponse add(String english, String japanese);
+	DictionaryServiceResponse delete(String english);
 	
 }

@@ -20,4 +20,24 @@
 
 	<context:annotation-config />
 	
+	<bean id="emf"
+		class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
+		<property name="persistenceUnitName" value="20120814Dictionary" />
+	</bean>
+
+	<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="emf" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="txManager" />
+
+	<bean id="em"
+		class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
+		<property name="entityManagerFactory" ref="emf" />
+	</bean>
+
+	<bean id="dictionaryModel"
+		class="kurosawa.dictionary.main.model.DictionaryModelEiwa">
+	</bean>
+
 </beans>
